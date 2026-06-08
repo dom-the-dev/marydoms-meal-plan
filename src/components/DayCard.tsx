@@ -55,25 +55,27 @@ export default function DayCard({ date, label }: Props) {
       </div>
 
       {day.meals.length > 0 && (
-        <ul className="mt-3 space-y-1">
+        <div className="mt-3 flex flex-wrap gap-2">
           {day.meals.map((meal) => (
-            <li key={meal.id} className="flex items-center justify-between gap-2 text-sm text-stone-600">
-              <span className="flex items-center gap-1.5">
-                <span className="text-stone-300">•</span>
-                {getMealName(meal)}
-                {meal.recipeId && (
-                  <span className="text-xs text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">Rezept</span>
-                )}
-              </span>
+            <div
+              key={meal.id}
+              className={`group flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+                meal.recipeId
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                  : 'bg-stone-100 border-stone-200 text-stone-700'
+              }`}
+            >
+              {meal.recipeId && <span className="text-emerald-500 text-xs">📋</span>}
+              <span>{getMealName(meal)}</span>
               <button
                 onClick={() => removeMeal(date, meal.id)}
-                className="text-stone-300 hover:text-red-400 transition-colors text-xs"
+                className="ml-0.5 text-current opacity-30 hover:opacity-80 transition-opacity leading-none"
               >
                 ✕
               </button>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
 
       {showForm ? (
